@@ -1,0 +1,46 @@
+[
+  {
+    "Prompt": "Show me the Toy Story poster",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Display the image of the Toy Story movie poster.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Visualize the official Toy Story film art.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I need to see the Toy Story promotional poster.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Can you display Toy Story images?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Could you showcase visuals from the Toy Story series?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Is it possible to view Toy Story imagery?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I'd like to see some pictures related to Toy Story.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I want to see pictures of Woody",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Could you share images of Woody?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I'd like to view photographs featuring Woody.",
+    "expected_component": "image"
+  }
+]

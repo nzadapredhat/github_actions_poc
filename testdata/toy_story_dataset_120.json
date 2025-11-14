@@ -1,0 +1,482 @@
+[
+  {
+    "Prompt": "Show me the Toy Story poster",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Display the image of the Toy Story movie poster.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Visualize the official Toy Story film art.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I need to see the Toy Story promotional poster.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Can you display Toy Story images?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Could you showcase visuals from the Toy Story series?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Is it possible to view Toy Story imagery?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I'd like to see some pictures related to Toy Story.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I want to see pictures of Woody",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Could you share images of Woody?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I'd like to view photographs featuring Woody.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Can you provide me with pictures of the character Woody from Toy Story?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Show me Buzz Lightyear images",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Display pictures of Buzz Lightyear from the Toy Story series.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Provide visuals related to Buzz Lightyear, a character from Toy Story.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Show me images associated with the Toy Story franchise featuring Buzz Lightyear.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Display Toy Story movie poster",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Showcase the Toy Story film's promotional poster.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Display the official Toy Story movie artwork.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Exhibit the Toy Story motion picture's poster design.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Can I see Rex the dinosaur pictures?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Would you be able to display images of Rex the dinosaur?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Could you show me some photos featuring Rex the dinosaur?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I'm interested in seeing any available illustrations or images of Rex the dinosaur.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Show me Mr. Potato Head images",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Display images of Mr. Potato Head.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Present visuals featuring Mr. Potato Head.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I need to see pictures of the character Mr. Potato Head.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Display Andy's room pictures",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Showcase Andy's Bedroom Photos",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Present Andy Drummond's Quarters: A Visual Tour",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Illustrate Andy's Sleeping Space Photo Gallery",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Show me Toy Story character images",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Display pictures of characters from Toy Story for me.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I need visuals of the Toy Story cast.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Could you provide me with images of Toy Story's main characters?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Can you show Sid's room pictures?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Could you display images of Sid's quarters?",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "I need visuals of Sid's living space.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Please provide shots of Sid's abode.",
+    "expected_component": "image"
+  },
+  {
+    "Prompt": "Play the Toy Story trailer",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Experience the opening scene of Toy Story.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Watch the intro sequence for Toy Story.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Unveil the Toy Story movie's initial trailer.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Show me Toy Story movie clips",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Present me with Toy Story film segments.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Display Toy Story movie snippets for me.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Share Toy Story video clips from the film.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "I want to watch Toy Story scenes",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "I'm planning to view the Toy Story sequences.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "I intend to see the scenes from Toy Story.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "I'd like to catch the Toy Story moments.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Play Woody and Buzz scenes",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Reenact Toy Story moments featuring Woody and Buzz.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Stage Woody and Buzz's action sequences from the film.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Perform key scenes of Toy Story with Woody and Buzz as characters.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Show me the opening scene",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Display the initial scene of Toy Story.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Present the debut sequence from Toy Story.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Visualize the starting segment of Toy Story.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Can you play the ending scene?",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Will you reenact the concluding scene from Toy Story?",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Could you recreate the final sequence of Toy Story?",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Is it possible for you to perform the closing scene from Toy Story?",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Display Toy Story behind the scenes",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Showcase Toy Story's making-of: An Inside Look",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Unveil Toy Story's Beyond the Camera Lens: A Behind-the-Scenes Journey",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Spotlight on Toy Story's Offscreen Creation: A Sneak Peek",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Show me animated sequences",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Present animated scenes to me.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Display animated clips for me.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Exhibit animated segments of Toy Story.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Play the chase scene",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Carry out the high-speed pursuit sequence.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Execute the thrilling chase segment.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "Perform the thrilling carriage-to-catch action.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "I want to see the rescue scene",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "I'm eager to witness the daring rescue sequence.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "The rescue act is what I'm keen on seeing.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "I'm interested in catching the heart-stopping rescue moment.",
+    "expected_component": "video-player"
+  },
+  {
+    "Prompt": "What is Toy Story's runtime?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Can you tell me the duration of Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What's the running time for Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "How long is the film Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "When was Toy Story released?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What year did Toy Story first hit the screens?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "To which year does the release date of Toy Story correspond?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "On what date was Toy Story initially made available to the public?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What's the IMDb rating?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Could you please share Toy Story's current IMDb score?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What's the consensus rating for Toy Story on IMDb?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "I'm curious, what's Toy Story's IMDb user rating?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Show me Toy Story details",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Present Toy Story specifics.",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Display information on Toy Story features.",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Reveal Toy Story particulars.",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What's the movie budget?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Could you share the film's financial plan?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What was the spending limit for this movie production?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "How much did it cost to bring Toy Story to life on screen?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Who directed Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Which filmmaker brought us Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What director is credited with Toy Story's creation?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Name the visionary behind the scenes of Toy Story.",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What studio made Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Which film production company was responsible for creating Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "To which studio do we attribute the creation of Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Identify the motion picture studio that launched the series with Toy Story.",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What year did it come out?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "In which year was Toy Story released?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What was the release date of Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "When did Toy Story hit the big screen for the first time?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Show me cast information",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Please provide the list of cast members for Toy Story.",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Who are the actors/actresses involved in Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Can you share the casting details for Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What genre is Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "In what category does Toy Story fall under?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "Can you identify the genre of Toy Story?",
+    "expected_component": "one-card"
+  },
+  {
+    "Prompt": "What type of film is Toy Story classified as?",
+    "expected_component": "one-card"
+  }
+]

@@ -1,0 +1,32 @@
+# Core Dependencies for Next Gen UI Agent Testing Framework
+
+# Next Gen UI packages
+next-gen-ui-agent==0.3.0
+next-gen-ui-langgraph
+
+# Testing and Validation
+smart-assertions
+
+# Data Validation and Parsing
+pydantic==2.12.4
+pydantic-core==2.41.5
+
+# Data Processing
+jsonpath-ng==1.7.0
+PyYAML==6.0.3
+
+# Type Checking
+typing-extensions==4.15.0
+typing-inspection==0.4.2
+annotated-types==0.7.0
+
+# Python Lexer/Parser (dependency for jsonpath-ng)
+ply==3.11
+
+# Build Tools (if needed for development)
+pbr==7.0.3
+stevedore==5.4.1
+
+# Note: Python 3.13 or higher required
+# Note: asyncio is part of Python standard library
+

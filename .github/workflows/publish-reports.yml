@@ -1,0 +1,161 @@
+name: Publish Test Reports
+
+on:
+  workflow_run:
+    workflows: ["CI - Test Next Gen UI Agent"]
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  publish-reports:
+    name: Publish HTML Reports to GitHub Pages
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download test reports
+      uses: actions/download-artifact@v4
+      with:
+        pattern: test-reports-*
+        path: ./reports
+        
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Prepare reports directory
+      run: |
+        mkdir -p public
+        if [ -d "reports" ]; then
+          cp -r reports/* public/
+        fi
+        
+        # Create index page that lists all reports
+        cat > public/index.html << 'EOF'
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Next Gen UI Agent Test Reports</title>
+            <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    min-height: 100vh;
+                }
+                .container {
+                    background: white;
+                    border-radius: 10px;
+                    padding: 30px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                }
+                h1 {
+                    color: #333;
+                    border-bottom: 3px solid #667eea;
+                    padding-bottom: 10px;
+                }
+                .report-list {
+                    list-style: none;
+                    padding: 0;
+                }
+                .report-item {
+                    margin: 15px 0;
+                    padding: 15px;
+                    background: #f8f9fa;
+                    border-left: 4px solid #667eea;
+                    border-radius: 5px;
+                    transition: all 0.3s ease;
+                }
+                .report-item:hover {
+                    background: #e9ecef;
+                    transform: translateX(5px);
+                }
+                .report-link {
+                    color: #667eea;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+                .report-link:hover {
+                    text-decoration: underline;
+                }
+                .timestamp {
+                    color: #6c757d;
+                    font-size: 14px;
+                    margin-left: 10px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>📊 Next Gen UI Agent - Test Reports</h1>
+                <p>Latest test execution reports from the CI pipeline.</p>
+                <ul class="report-list" id="reportList"></ul>
+            </div>
+            
+            <script>
+                // Auto-discover report directories
+                fetch('.')
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const links = doc.querySelectorAll('a');
+                        const reportList = document.getElementById('reportList');
+                        
+                        links.forEach(link => {
+                            const href = link.getAttribute('href');
+                            if (href && href.includes('report_')) {
+                                const li = document.createElement('li');
+                                li.className = 'report-item';
+                                li.innerHTML = `
+                                    <a href="${href}" class="report-link">
+                                        ${href}
+                                    </a>
+                                `;
+                                reportList.appendChild(li);
+                            }
+                        });
+                        
+                        if (reportList.children.length === 0) {
+                            reportList.innerHTML = '<li class="report-item">No reports available yet. Run the CI pipeline to generate reports.</li>';
+                        }
+                    })
+                    .catch(() => {
+                        document.getElementById('reportList').innerHTML = 
+                            '<li class="report-item">Unable to load report list.</li>';
+                    });
+            </script>
+        </body>
+        </html>
+        EOF
+        
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: './public'
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+      
+    - name: Publish Summary
+      run: |
+        echo "## Test Reports Published" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Test reports have been published to GitHub Pages." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "🔗 [View Reports](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY
+

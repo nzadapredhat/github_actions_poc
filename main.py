@@ -11,7 +11,7 @@ from utils.logger import get_logger
 
 logger = get_logger("next_gen_ui")
 
-llm_model = "granite3.1-dense:2b"
+llm_model = "llama3.2"
 
 
 def run():

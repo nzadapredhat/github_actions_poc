@@ -1,5 +1,57 @@
 # Troubleshooting Guide
 
+## Model Not Found Error (404)
+
+### Problem
+The following error occurs when running tests in GitHub Actions:
+```
+Error code: 404 - {'error': {'message': "model 'llama3.2' not found", 'type': 'api_error', 'param': None, 'code': None}}
+openai.NotFoundError: Error code: 404 - {'error': {'message': "model 'llama3.2' not found"...
+```
+
+### Root Cause
+The `next-gen-ui-langgraph` package has a hardcoded model name (e.g., `llama3.2`) in the `movies_agent`, but the GitHub Actions workflow was configured to pull a different model (e.g., `granite3.1-dense:2b`). The `llm_model` variable in `main.py` is only used for reporting purposes, not for configuring which model the agent actually uses.
+
+### Solution
+Update the GitHub Actions workflow to pull the correct model that matches what the `next-gen-ui-langgraph` package expects:
+
+1. **Update the cache key** in `.github/workflows/test-and-publish.yml`:
+   ```yaml
+   key: ollama-${{ runner.os }}-llama3.2-v1
+   restore-keys: |
+     ollama-${{ runner.os }}-llama3.2-
+   ```
+
+2. **Update the model pull command**:
+   ```bash
+   if ollama list | grep -q "llama3.2"; then
+     echo "Model llama3.2 already available (from cache)"
+   else
+     echo "Pulling llama3.2 model..."
+     ollama pull llama3.2
+   fi
+   ```
+
+3. **Update `main.py`** to match (for reporting consistency):
+   ```python
+   llm_model = "llama3.2"
+   ```
+
+### How to Identify the Required Model
+If you encounter this error with a different model name:
+1. Check the error message for the model name (e.g., `"model 'MODEL_NAME' not found"`)
+2. Update the workflow to pull that specific model
+3. The model name must match exactly what Ollama expects (check [Ollama's model library](https://ollama.com/library))
+
+### Alternative: Configure the Package
+If the `next-gen-ui-langgraph` package supports model configuration via environment variables:
+```yaml
+env:
+  LLM_MODEL: "your-preferred-model"
+```
+
+Check the package documentation for available configuration options.
+
 ## Connection Error in GitHub Actions
 
 ### Problem

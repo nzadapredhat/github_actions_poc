@@ -39,9 +39,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ~/.ollama
-        key: ollama-${{ runner.os }}-granite3.1-dense-2b-v1
+        key: ollama-${{ runner.os }}-llama3.2-v1
         restore-keys: |
-          ollama-${{ runner.os }}-granite3.1-dense-2b-
+          ollama-${{ runner.os }}-llama3.2-
           ollama-${{ runner.os }}-
     
     - name: Install and start Ollama
@@ -67,11 +67,11 @@ jobs:
         curl -s http://localhost:11434/api/tags || (echo "Ollama failed to start" && cat /tmp/ollama.log && exit 1)
         
         # Check if model is already available (from cache)
-        if ollama list | grep -q "granite3.1-dense:2b"; then
-          echo "Model granite3.1-dense:2b already available (from cache)"
+        if ollama list | grep -q "llama3.2"; then
+          echo "Model llama3.2 already available (from cache)"
         else
-          echo "Pulling granite3.1-dense:2b model..."
-          ollama pull granite3.1-dense:2b
+          echo "Pulling llama3.2 model..."
+          ollama pull llama3.2
         fi
         
         # Verify model is available

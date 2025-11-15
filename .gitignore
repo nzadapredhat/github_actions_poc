@@ -172,8 +172,9 @@ $RECYCLE.BIN/
 .Trash-*
 .nfs*
 
-# AI Reports (generated files)
+# AI Reports (generated files - but keep templates directory)
 AI_Reports/
+!templates/
 
 # Temporary files
 *.tmp

@@ -15,28 +15,31 @@ def setup_html_report(base_report_dir: str, run_dir: str, timestamp: str) -> Opt
     Copy and configure HTML report template for a test run.
     
     Args:
-        base_report_dir: Base directory containing the template index.html
+        base_report_dir: Base directory for storing report outputs (not used for template location)
         run_dir: Directory for this specific test run
         timestamp: Timestamp string to use in JSON filename reference
         
     Returns:
         Path to the generated HTML report file, or None if setup failed
     """
-    base_index_html = os.path.join(base_report_dir, "index.html")
+    # Get the template from the templates directory (which is committed to git)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    template_path = os.path.join(script_dir, "templates", "report_template.html")
     run_index_html = os.path.join(run_dir, "index.html")
     
     try:
         # Ensure the run directory exists
         os.makedirs(run_dir, exist_ok=True)
         
-        # Check if base template exists
-        if not os.path.exists(base_index_html):
-            logger.error(f"Base HTML template not found at: {base_index_html}")
+        # Check if template exists
+        if not os.path.exists(template_path):
+            logger.error(f"HTML template not found at: {template_path}")
+            logger.error(f"Please ensure the templates/report_template.html file exists in the repository")
             return None
         
-        # Copy base index.html to the run-specific report folder
-        shutil.copy(base_index_html, run_index_html)
-        logger.debug(f"Copied HTML template to: {run_index_html}")
+        # Copy template to the run-specific report folder
+        shutil.copy(template_path, run_index_html)
+        logger.debug(f"Copied HTML template from {template_path} to: {run_index_html}")
         
         # Update the copied index.html to reference this run's JSON file
         with open(run_index_html, "r", encoding="utf-8") as f:

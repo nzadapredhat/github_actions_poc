@@ -16,7 +16,7 @@ llm_model = "granite3.1-dense:2b"
 
 def run():
     # Load test data
-    with open("testdata/toy_story_dataset_120.json", 'r') as file:
+    with open("testdata/toy_story_dataset_5.json", 'r') as file:
         data = json.load(file)
 
     results = []

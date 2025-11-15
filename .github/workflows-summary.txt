@@ -1,40 +1,33 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                  GITHUB ACTIONS WORKFLOWS - SUMMARY                          ║
+║                  GITHUB ACTIONS WORKFLOW - SUMMARY                           ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-✅ Successfully Created 2 Streamlined GitHub Actions Workflows!
+✅ Single, Streamlined GitHub Actions Workflow Created!
 
 📁 Location: .github/workflows/
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📋 WORKFLOW FILES CREATED:
+📋 WORKFLOW FILE:
 
-1. 🔄 ci.yml
-   ├─ Main CI/CD pipeline
-   ├─ Runs Python tests on every push/PR
-   ├─ Uploads test reports as artifacts
-   ├─ Python 3.13 support
-   └─ Automatic test execution
-
-2. 📄 publish-reports.yml
-   ├─ Publishes HTML reports to GitHub Pages
-   ├─ Auto-triggers after successful CI
-   ├─ Beautiful report index page
-   └─ Public report hosting
+🔄 test-and-publish.yml
+   ├─ All-in-one workflow
+   ├─ Job 1: Run tests & upload artifacts
+   ├─ Job 2: Publish to GitHub Pages
+   └─ Single file for complete CI/CD
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📚 DOCUMENTATION CREATED:
+📚 DOCUMENTATION:
 
 • .github/workflows/README.md
-  └─ Comprehensive workflow documentation
+  └─ Detailed workflow documentation
 
 • .github/GITHUB_ACTIONS_SETUP.md
-  └─ Step-by-step setup guide
+  └─ Complete setup guide with troubleshooting
 
 • .github/workflows-summary.txt
-  └─ This summary file
+  └─ This quick reference
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -42,12 +35,12 @@
 
 Step 1: Push to GitHub
    $ git add .github/
-   $ git commit -m "Add GitHub Actions workflows"
+   $ git commit -m "Add GitHub Actions workflow"
    $ git push origin main
 
-Step 2: Enable GitHub Pages (optional, for report publishing)
-   • Go to Settings → Pages
-   • Set source to "GitHub Actions"
+Step 2: Enable GitHub Pages (optional)
+   • Settings → Pages
+   • Source: "GitHub Actions"
    • Save
 
 Step 3: Configure Permissions
@@ -55,116 +48,182 @@ Step 3: Configure Permissions
    • Enable "Read and write permissions"
    • Save
 
-Step 4: Watch It Work!
-   • Go to Actions tab
-   • Workflows will run automatically on push
-   • Or trigger manually with "Run workflow" button
+Step 4: Done!
+   • Workflow runs automatically on push
+   • View results in Actions tab
+   • Reports available as artifacts & on GitHub Pages
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🔑 KEY FEATURES:
+🔑 WORKFLOW STRUCTURE:
 
-✓ Automated Testing
-  • Runs on every push/PR to main or develop
-  • Python 3.13 with full dependency installation
-  • Comprehensive test execution
-  • Detailed error reporting
-
-✓ Test Report Publishing
-  • HTML reports hosted on GitHub Pages
-  • Downloadable artifacts (30-day retention)
-  • Historical report tracking
-  • Beautiful report index page
-
-✓ Simple & Focused
-  • Only test running and reporting
-  • No code quality checks
-  • No dependency scanning
-  • No scheduled runs
-  • Streamlined for core functionality
+Job 1: TEST
+  ✓ Setup Python 3.13
+  ✓ Install dependencies
+  ✓ Run test suite (main.py)
+  ✓ Generate reports
+  ✓ Upload artifacts (30 days)
+  ✓ Create summary with pass/fail stats
+  
+Job 2: PUBLISH
+  ✓ Download test reports
+  ✓ Create index page
+  ✓ Publish to GitHub Pages
+  ✓ Only runs on push to main/develop (not PRs)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📊 WORKFLOW TRIGGERS:
 
-ci.yml                    → Push/PR to main or develop + Manual
-publish-reports.yml       → After CI success + Manual
-
-Both workflows support manual triggering via "Run workflow" button!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📦 ARTIFACTS GENERATED:
-
-After each CI run, the following artifacts are available for download:
-
-• test-reports-python-3.13
-  └─ Complete test reports (HTML + JSON files)
-  └─ Retained for 30 days
-
-• test-results-json-3.13
-  └─ JSON test results only
-  └─ Retained for 30 days
+Push to main/develop     → Runs both Test + Publish jobs
+Pull Request            → Runs Test job only (no publish)
+Manual trigger          → Runs both jobs
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🌐 VIEWING TEST REPORTS:
+✨ KEY FEATURES:
 
-Method 1: Download from Actions
-  • Go to Actions → Select workflow run
-  • Scroll to Artifacts section
-  • Download and extract zip file
-  • Open index.html in browser
+✓ Single Workflow File
+  • One file for everything
+  • Easy to maintain
+  • Clear workflow structure
+
+✓ Automated Testing
+  • Runs on every push/PR
+  • Python 3.13 support
+  • Detailed test summaries
+  • Reports even if tests fail
+
+✓ Smart Publishing
+  • Only publishes on main/develop push
+  • PRs get tested but don't publish
+  • Beautiful GitHub Pages reports
+  • Historical report tracking
+
+✓ Artifacts & Reports
+  • 30-day artifact retention
+  • Downloadable test reports
+  • Online viewing via GitHub Pages
+  • JSON + HTML formats
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 VIEWING REPORTS:
+
+Method 1: Artifacts (Always Available)
+  • Actions → Workflow run → Artifacts section
+  • Download test-reports-python-3.13.zip
+  • Extract and view HTML reports
+  • Available for 30 days
 
 Method 2: GitHub Pages (Recommended)
-  • Reports automatically published after CI success
-  • Visit: https://[username].github.io/[repo-name]/
-  • View all historical reports
+  • Enable Pages in Settings
+  • Visit: https://[username].github.io/[repo]/
+  • Browse all historical reports
   • No download needed
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🎨 CUSTOMIZATION OPTIONS:
+🎨 WORKFLOW BEHAVIOR:
+
+┌─────────────────────────────────────────────────────────────┐
+│  Push to main/develop                                       │
+│    ↓                                                        │
+│  TEST Job                                                   │
+│    • Runs tests                                            │
+│    • Uploads artifacts                                     │
+│    • Creates summary                                       │
+│    ↓                                                        │
+│  PUBLISH Job                                               │
+│    • Downloads reports                                     │
+│    • Publishes to Pages                                   │
+│    ↓                                                        │
+│  Reports Available                                         │
+│    • Artifacts (download)                                 │
+│    • GitHub Pages (online)                                │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│  Pull Request                                               │
+│    ↓                                                        │
+│  TEST Job ONLY                                             │
+│    • Runs tests                                            │
+│    • Uploads artifacts                                     │
+│    • Creates summary                                       │
+│    ↓                                                        │
+│  PUBLISH Job SKIPPED                                       │
+│    (PRs don't publish to Pages)                           │
+│    ↓                                                        │
+│  Artifacts Available for Download                          │
+└─────────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 WHAT YOU GET:
+
+Test Summaries:
+  • Total tests executed
+  • Pass/fail counts
+  • Pass rate percentage
+  • Clickable links to artifacts
+
+Artifacts:
+  • HTML test reports
+  • JSON result files
+  • 30-day retention
+  • Always available for download
+
+GitHub Pages:
+  • Beautiful report index
+  • All historical reports
+  • Public viewing (optional)
+  • Auto-updated on each push
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 CUSTOMIZATION:
 
 Change Test Dataset:
-  • Edit main.py to use different dataset
-  • Options: toy_story_dataset_5.json (quick)
-            toy_story_dataset_10.json (medium)
-            toy_story_dataset_120.json (full)
+  • Edit main.py line 19
+  • Options: 5, 10, or 120 test cases
 
-Modify Workflow Triggers:
-  • Edit ci.yml to add more branches
-  • Add schedule for automatic runs
-  • Customize PR triggers
+Add More Branches:
+  • Edit test-and-publish.yml
+  • Add to branches: [ ] list
+
+Add Scheduled Runs:
+  • Add schedule: with cron expression
+  • Example: Daily at 2 AM UTC
 
 Add Status Badge:
-  • Copy badge code from README.md
-  • Paste in your project README
-  • Shows real-time CI status
+  • Copy badge code from README
+  • Shows real-time workflow status
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💡 WHAT'S NEXT:
+💡 NEXT STEPS:
 
-1. Read .github/GITHUB_ACTIONS_SETUP.md for detailed setup instructions
-2. Push workflows to your GitHub repository
-3. Configure GitHub Pages if you want public report hosting
-4. Add workflow status badge to your README.md
-5. Run your first test and view the results!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🎓 NEED HELP?
-
-• Check .github/workflows/README.md for workflow details
-• Read .github/GITHUB_ACTIONS_SETUP.md for setup guide
-• Visit GitHub Actions Docs: https://docs.github.com/en/actions
+1. Push workflow to GitHub
+2. Enable GitHub Pages (optional)
+3. Configure workflow permissions
+4. Watch it run automatically
+5. View reports online or download artifacts
+6. Add status badge to README
+7. Enjoy automated testing! 🎉
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✨ Your Next Gen UI Agent Testing Framework is now ready for CI/CD! ✨
+🎓 DOCUMENTATION:
 
-Streamlined Setup: Test Execution + Report Publishing Only
+• Full Setup Guide: .github/GITHUB_ACTIONS_SETUP.md
+• Workflow Details: .github/workflows/README.md
+• GitHub Actions Docs: https://docs.github.com/en/actions
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ Your Next Gen UI Agent Testing Framework - Fully Automated! ✨
+
+Single Workflow: Test Execution + Report Publishing Combined
 
 Created: 2025-11-15
 Project: Next Gen UI Agent Testing Framework

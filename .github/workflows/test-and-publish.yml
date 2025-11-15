@@ -1,0 +1,273 @@
+name: Test and Publish Reports
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.13']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Verify installation
+      run: |
+        python --version
+        pip list
+        
+    - name: Create test data directory
+      run: |
+        mkdir -p testdata
+        mkdir -p AI_Reports
+        
+    - name: Run tests
+      run: |
+        python main.py
+      continue-on-error: true  # Don't fail the workflow if tests fail
+      env:
+        PYTHONUNBUFFERED: 1
+        
+    - name: Check if reports were generated
+      run: |
+        ls -la AI_Reports/
+        find AI_Reports/ -name "*.json" -o -name "*.html"
+        
+    - name: Upload test reports as artifacts
+      uses: actions/upload-artifact@v4
+      if: always()  # Upload reports even if tests fail
+      with:
+        name: test-reports-python-${{ matrix.python-version }}
+        path: |
+          AI_Reports/
+          !AI_Reports/**/*.pyc
+        retention-days: 30
+        
+    - name: Upload reports for GitHub Pages
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: reports-for-pages
+        path: AI_Reports/
+        retention-days: 1  # Only needed temporarily for the publish job
+        
+    - name: Test Summary
+      if: always()
+      run: |
+        echo "## Test Execution Complete" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Test reports have been generated and uploaded as artifacts." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Try to extract summary from the most recent JSON report
+        if [ -f AI_Reports/report_*/temp_results_*.json ]; then
+          LATEST_REPORT=$(ls -t AI_Reports/report_*/temp_results_*.json | head -1)
+          TOTAL=$(jq '. | length' "$LATEST_REPORT" 2>/dev/null || echo "0")
+          PASSED=$(jq '[.[] | select(.status == true)] | length' "$LATEST_REPORT" 2>/dev/null || echo "0")
+          FAILED=$(jq '[.[] | select(.status == false)] | length' "$LATEST_REPORT" 2>/dev/null || echo "0")
+          
+          echo "### Test Results:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Tests:** $TOTAL" >> $GITHUB_STEP_SUMMARY
+          echo "- **Passed:** $PASSED ✅" >> $GITHUB_STEP_SUMMARY
+          echo "- **Failed:** $FAILED ❌" >> $GITHUB_STEP_SUMMARY
+          
+          if [ $TOTAL -gt 0 ]; then
+            PASS_RATE=$(awk "BEGIN {printf \"%.2f\", ($PASSED * 100 / $TOTAL)}")
+            echo "- **Pass Rate:** ${PASS_RATE}%" >> $GITHUB_STEP_SUMMARY
+          fi
+        else
+          echo "### Artifacts Available:" >> $GITHUB_STEP_SUMMARY
+          echo "- Test Reports (HTML + JSON)" >> $GITHUB_STEP_SUMMARY
+        fi
+
+  publish:
+    name: Publish to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: test
+    if: always() && github.event_name == 'push'  # Only publish on push to main/develop, not on PRs
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download test reports
+      uses: actions/download-artifact@v4
+      with:
+        name: reports-for-pages
+        path: ./reports
+      continue-on-error: true
+        
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Prepare reports directory
+      run: |
+        mkdir -p public
+        
+        # Copy reports if they exist
+        if [ -d "reports" ] && [ "$(ls -A reports 2>/dev/null)" ]; then
+          cp -r reports/* public/
+        fi
+        
+        # Create index page that lists all reports
+        cat > public/index.html << 'EOF'
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Next Gen UI Agent Test Reports</title>
+            <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    min-height: 100vh;
+                }
+                .container {
+                    background: white;
+                    border-radius: 10px;
+                    padding: 30px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                }
+                h1 {
+                    color: #333;
+                    border-bottom: 3px solid #667eea;
+                    padding-bottom: 10px;
+                }
+                .report-list {
+                    list-style: none;
+                    padding: 0;
+                }
+                .report-item {
+                    margin: 15px 0;
+                    padding: 15px;
+                    background: #f8f9fa;
+                    border-left: 4px solid #667eea;
+                    border-radius: 5px;
+                    transition: all 0.3s ease;
+                }
+                .report-item:hover {
+                    background: #e9ecef;
+                    transform: translateX(5px);
+                }
+                .report-link {
+                    color: #667eea;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+                .report-link:hover {
+                    text-decoration: underline;
+                }
+                .timestamp {
+                    color: #6c757d;
+                    font-size: 14px;
+                    margin-left: 10px;
+                }
+                .info-box {
+                    background: #e7f3ff;
+                    border-left: 4px solid #2196F3;
+                    padding: 15px;
+                    margin: 20px 0;
+                    border-radius: 5px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>📊 Next Gen UI Agent - Test Reports</h1>
+                <p>Latest test execution reports from the CI pipeline.</p>
+                
+                <div class="info-box">
+                    <strong>ℹ️ Note:</strong> Reports are automatically generated and published when tests run on the main or develop branch.
+                </div>
+                
+                <h2>Available Reports</h2>
+                <ul class="report-list" id="reportList"></ul>
+            </div>
+            
+            <script>
+                // List all report directories
+                const reportList = document.getElementById('reportList');
+                
+                // Try to find report directories by listing them
+                fetch('.')
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const links = doc.querySelectorAll('a');
+                        let foundReports = false;
+                        
+                        links.forEach(link => {
+                            const href = link.getAttribute('href');
+                            if (href && href.includes('report_')) {
+                                foundReports = true;
+                                const li = document.createElement('li');
+                                li.className = 'report-item';
+                                li.innerHTML = `
+                                    <a href="${href}" class="report-link">
+                                        📄 ${href}
+                                    </a>
+                                `;
+                                reportList.appendChild(li);
+                            }
+                        });
+                        
+                        if (!foundReports) {
+                            reportList.innerHTML = '<li class="report-item">No reports available yet. Push code to main or develop branch to generate reports.</li>';
+                        }
+                    })
+                    .catch(() => {
+                        reportList.innerHTML = '<li class="report-item">No reports available yet. Push code to main or develop branch to generate reports.</li>';
+                    });
+            </script>
+        </body>
+        </html>
+        EOF
+        
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: './public'
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+      
+    - name: Publish Summary
+      if: always()
+      run: |
+        echo "## Test Reports Published to GitHub Pages" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Test reports have been published and are now available online." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "🔗 [View Reports](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY
+

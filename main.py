@@ -6,7 +6,7 @@ import traceback
 from smart_assertions import soft_assert
 
 from next_gen_ui_langgraph.readme_example import search_movie, movies_agent, ngui_cfg, ngui_agent
-from report_generator import setup_html_report, create_report_directory
+from report_generator import setup_html_report, create_report_directory, finalize_html_report
 from utils.logger import get_logger
 
 logger = get_logger("next_gen_ui")
@@ -77,6 +77,10 @@ def run():
             with open(file_name, 'w') as file_system:
                 json.dump(results, file_system, indent=2)
 
+    # Finalize HTML report by embedding JSON data (avoids CORS issues when viewing locally)
+    if run_index_html and os.path.exists(file_name):
+        finalize_html_report(run_index_html, file_name)
+    
     # Log summary
     total_tests = len(results)
     passed_tests = sum(1 for r in results if r.get("status") is True)

@@ -12,7 +12,8 @@ logger = get_logger("report_generator")
 
 def setup_html_report(base_report_dir: str, run_dir: str, timestamp: str) -> Optional[str]:
     """
-    Copy and configure HTML report template for a test run.
+    Copy HTML report template for a test run.
+    Note: The actual data embedding happens in finalize_html_report()
     
     Args:
         base_report_dir: Base directory for storing report outputs (not used for template location)
@@ -41,20 +42,8 @@ def setup_html_report(base_report_dir: str, run_dir: str, timestamp: str) -> Opt
         shutil.copy(template_path, run_index_html)
         logger.debug(f"Copied HTML template from {template_path} to: {run_index_html}")
         
-        # Update the copied index.html to reference this run's JSON file
-        with open(run_index_html, "r", encoding="utf-8") as f:
-            html_content = f.read()
-        
-        # Replace the generic JSON filename with the timestamped version
-        updated_html = html_content.replace(
-            "fetch('temp_results.json')", 
-            f"fetch('temp_results_{timestamp}.json')"
-        )
-        
-        with open(run_index_html, "w", encoding="utf-8") as f:
-            f.write(updated_html)
-        
-        logger.info(f"✓ HTML report successfully created at: {run_index_html}")
+        logger.info(f"✓ HTML report template created at: {run_index_html}")
+        logger.info(f"  Note: Call finalize_html_report() after tests complete to embed data")
         return run_index_html
         
     except FileNotFoundError as e:
@@ -67,6 +56,87 @@ def setup_html_report(base_report_dir: str, run_dir: str, timestamp: str) -> Opt
         logger.warning(f"Failed to create HTML report template: {e}")
         logger.debug("Will continue with test execution and generate JSON results only")
         return None
+
+
+def finalize_html_report(html_path: str, json_path: str) -> bool:
+    """
+    Embed JSON data directly into HTML report to avoid CORS issues when viewing locally.
+    
+    Args:
+        html_path: Path to the HTML report file
+        json_path: Path to the JSON results file
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        import json
+        
+        # Read the JSON data
+        with open(json_path, 'r', encoding='utf-8') as f:
+            json_data = json.load(f)
+        
+        # Read the HTML template
+        with open(html_path, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        
+        # Convert JSON data to JavaScript variable
+        json_str = json.dumps(json_data, indent=2)
+        
+        # Replace the fetch() call with embedded data
+        # Find the fetch section and replace it
+        fetch_pattern = """        // Fetch and display results
+        fetch('temp_results.json')
+            .then(response => response.json())
+            .then(data => {
+                allResults = data;
+                updateSummary();
+                displayResults();
+                document.getElementById('loading').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error loading results:', error);
+                document.getElementById('loading').innerHTML = 
+                    '<div class="no-results"><h3>❌ Error loading test results</h3><p>' + error.message + '</p></div>';
+            });"""
+        
+        replacement = f"""        // Data embedded directly to avoid CORS issues when viewing locally
+        allResults = {json_str};
+        updateSummary();
+        displayResults();
+        document.getElementById('loading').style.display = 'none';"""
+        
+        updated_html = html_content.replace(fetch_pattern, replacement)
+        
+        # Also handle the case where the JSON filename might be timestamped
+        if fetch_pattern not in html_content:
+            # Try to find and replace any fetch() call that looks like it's loading results
+            import re
+            fetch_regex = r"fetch\('temp_results[^']*\.json'\)\s*\.then\(response => response\.json\(\)\)\s*\.then\(data => \{[^}]*allResults = data;[^}]*\}\)\s*\.catch\([^)]*\);"
+            if re.search(fetch_regex, html_content, re.DOTALL):
+                updated_html = re.sub(
+                    r"// Fetch and display results\s*fetch\('temp_results[^']*\.json'\).*?\.catch\([^;]*\);",
+                    replacement,
+                    html_content,
+                    flags=re.DOTALL
+                )
+        
+        # Write the updated HTML
+        with open(html_path, 'w', encoding='utf-8') as f:
+            f.write(updated_html)
+        
+        logger.info(f"✓ HTML report finalized with embedded data: {html_path}")
+        return True
+        
+    except FileNotFoundError as e:
+        logger.error(f"File not found during HTML report finalization: {e}")
+        return False
+    except json.JSONDecodeError as e:
+        logger.error(f"Invalid JSON data: {e}")
+        return False
+    except Exception as e:
+        logger.error(f"Failed to finalize HTML report: {e}")
+        return False
 
 
 def sanitize_model_name(model_name: str) -> str:

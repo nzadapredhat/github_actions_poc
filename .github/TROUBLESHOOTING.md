@@ -52,6 +52,71 @@ env:
 
 Check the package documentation for available configuration options.
 
+## CORS Error When Viewing Downloaded Reports
+
+### Problem
+When opening downloaded HTML reports in a browser, you see an error:
+```
+Access to fetch at 'file:///path/to/temp_results_*.json' from origin 'null' has been blocked by CORS policy
+```
+
+The report displays "Loading test results..." indefinitely and never shows the actual data.
+
+### Root Cause
+Browsers block JavaScript `fetch()` requests when viewing files using the `file://` protocol for security reasons. The HTML report tries to load the JSON data file via AJAX, which is blocked by the browser's CORS (Cross-Origin Resource Sharing) policy.
+
+### Solution 1: Automatic Fix (For New Reports)
+As of the latest update, the report generator automatically embeds JSON data directly into HTML reports, eliminating CORS issues. Reports generated after this update will work perfectly when opened locally.
+
+To get the fixed version:
+1. Pull the latest code changes
+2. Re-run your tests to generate new reports
+3. The new reports will work without CORS errors
+
+### Solution 2: Fix Downloaded Reports (Existing Reports)
+For reports you've already downloaded that have the CORS issue, use the fix utility script:
+
+```bash
+# Navigate to your project directory
+cd /path/to/GitHub_Actions
+
+# Fix a single report directory
+python fix_downloaded_reports.py ~/Downloads/artifact/report_20251115_135705_llama3.2/
+
+# Or fix all reports in the AI_Reports directory
+python fix_downloaded_reports.py AI_Reports/
+```
+
+The script will:
+- Find all `index.html` files and their corresponding JSON data
+- Embed the JSON data directly into the HTML files
+- Allow you to view the reports without CORS errors
+
+### Solution 3: Use a Local Web Server (Alternative)
+If you prefer not to modify the files, you can serve them through a local web server:
+
+```bash
+# Navigate to the report directory
+cd ~/Downloads/artifact/report_20251115_135705_llama3.2/
+
+# Start a simple Python web server
+python3 -m http.server 8000
+
+# Open in browser: http://localhost:8000/index.html
+```
+
+### Solution 4: Browser Extension
+Some browsers allow you to disable CORS checks for local files, but this is **not recommended** for security reasons.
+
+### Technical Details
+The fix works by:
+1. Reading the JSON data file
+2. Converting it to a JavaScript variable
+3. Embedding it directly in the HTML `<script>` section
+4. Replacing the `fetch()` call with direct data assignment
+
+This makes the report completely self-contained and viewable anywhere without needing to fetch external files.
+
 ## Connection Error in GitHub Actions
 
 ### Problem
